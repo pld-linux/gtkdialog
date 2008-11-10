@@ -3,11 +3,12 @@ Summary:	Utility for fast and easy GUI building
 Summary(pl.UTF-8):	Narzędzie do szybkiego i łatwego budowania interfejsów graficznych
 Name:		gtkdialog
 Version:	0.7.9
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	ftp://linux.pte.hu/pub/%{name}/%{name}-%{version}.tar.gz
 # Source0-md5:	e0eebb5a1d2301738c34c8b5b692cf7a
+Patch0:		%{name}-name_conflict.patch
 URL:		http://linux.pte.hu/~pipas/gtkdialog/
 BuildRequires:	libglade2-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -28,8 +29,13 @@ budowy GUI.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 %{__make}
 
@@ -46,4 +52,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README TODO
 %attr(777,root,root) %{_bindir}/%{name}
-%{_infodir}/%{name}.info.gz
+%{_infodir}/%{name}.info*
