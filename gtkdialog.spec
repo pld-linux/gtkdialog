@@ -1,9 +1,8 @@
-#
 Summary:	Utility for fast and easy GUI building
 Summary(pl.UTF-8):	Narzędzie do szybkiego i łatwego budowania interfejsów graficznych
 Name:		gtkdialog
 Version:	0.7.9
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	ftp://linux.pte.hu/pub/%{name}/%{name}-%{version}.tar.gz
@@ -41,12 +40,17 @@ budowy GUI.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
+
+%postun	-p /sbin/postshell
+-/usr/sbin/fix-info-dir -c %{_infodir}
 
 %files
 %defattr(644,root,root,755)
